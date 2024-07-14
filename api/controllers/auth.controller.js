@@ -78,7 +78,6 @@ export const google = async (req, res, next) => {
         })
         .json(rest);
     } else {
-      console.log('running')
       const generatedPassword =
         Math.random().toString(36).slice(-8) +
         Math.random().toString(36).slice(-8);
