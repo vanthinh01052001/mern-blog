@@ -15,6 +15,11 @@ const userSchema = new mongoose.Schema(
       type: String,
       require: true,
     },
+    profilePicture: {
+      type: String,
+      default:
+        "https://img.icons8.com/?size=100&id=fUUEbUbXhzOA&format=png&color=000000",
+    },
   },
   { timestamps: true }
 );

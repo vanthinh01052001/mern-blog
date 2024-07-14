@@ -7,13 +7,12 @@ import {
   signInStart,
   signInSuccess,
 } from "../redux/user/userSlice";
+import OAuth from "../components/OAuth";
 
 export default function SignIn() {
   const dispatch = useDispatch();
   const [formData, setFormData] = useState({});
   const { loading, error: errorMessage } = useSelector((state) => state.user);
-  // const [errorMessage, setErrorMessage] = useState(null);
-  // const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const handleChange = (e) => {
     setFormData({
@@ -28,8 +27,6 @@ export default function SignIn() {
     }
     try {
       dispatch(signInStart());
-      // setLoading(true);
-      // setErrorMessage(null);
       const res = await fetch("api/auth/signin", {
         method: "post",
         headers: {
@@ -39,18 +36,14 @@ export default function SignIn() {
       });
       const data = await res.json();
       if (data.success === false) {
-        // return setErrorMessage(data.message);
         dispatch(signInFailure(data.message));
       }
-      // setLoading(false);
       if (res.ok) {
         dispatch(signInSuccess(data));
         navigate("/");
       }
     } catch (error) {
       dispatch(signInFailure(error.message));
-      // setErrorMessage(error.message);
-      // setLoading(false);
     }
   };
   return (
@@ -106,6 +99,7 @@ export default function SignIn() {
                 "Sign In"
               )}
             </Button>
+            <OAuth/>
           </form>
           <div className="flex gap-2 text-sm mt-5">
             <span>{`Don't Have an account?`}</span>
