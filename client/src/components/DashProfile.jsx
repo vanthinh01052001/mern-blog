@@ -9,8 +9,16 @@ import {
 } from "firebase/storage";
 import { app } from "../firebase.js";
 import { CircularProgressbar } from "react-circular-progressbar";
-import { deleteUserFailure, deleteUserStart, deleteUserSuccess, updateFailure, updateStart, updateSuccess } from "../redux/user/userSlice.js";
-import {HiOutlineExclamationCircle} from 'react-icons/hi'
+import {
+  deleteUserFailure,
+  deleteUserStart,
+  deleteUserSuccess,
+  signoutSuccess,
+  updateFailure,
+  updateStart,
+  updateSuccess,
+} from "../redux/user/userSlice.js";
+import { HiOutlineExclamationCircle } from "react-icons/hi";
 
 export default function DashProfile() {
   const dispatch = useDispatch();
@@ -23,7 +31,7 @@ export default function DashProfile() {
   const [updateUserSuccess, setUpdateUserSuccess] = useState(null);
   const [updateUserError, setUpdateUserError] = useState(null);
   const [showModal, setShowModal] = useState(false);
-  const [formData, setFormData] = useState({})
+  const [formData, setFormData] = useState({});
   const filePickerRef = useRef();
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -48,7 +56,7 @@ export default function DashProfile() {
     //     }
     //   }
     // }
-    setImageFileUploading(true)
+    setImageFileUploading(true);
     setImageFileUploadError(null);
     const storage = getStorage(app);
     const fileName = new Date().getTime() + imageFile.name;
@@ -68,74 +76,89 @@ export default function DashProfile() {
         );
         setImageFileUploadProgress(null);
         setImageFile(null);
-        setFileImageUrl(null)
-        setImageFileUploading(false)
+        setFileImageUrl(null);
+        setImageFileUploading(false);
       },
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           setFileImageUrl(downloadURL);
           setFormData({
             ...formData,
-            profilePicture: downloadURL
-          })
-          setImageFileUploading(false)
+            profilePicture: downloadURL,
+          });
+          setImageFileUploading(false);
         });
       }
     );
   };
-  const handleChange = (e) =>{
+  const handleChange = (e) => {
     setFormData({
       ...formData,
-      [e.target.id]: e.target.value
-    })
-  }
+      [e.target.id]: e.target.value,
+    });
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setUpdateUserError(null)
-    setUpdateUserSuccess(null)
-    if(Object.keys(formData).length === 0) {
-      setUpdateUserError("No changes made")
+    setUpdateUserError(null);
+    setUpdateUserSuccess(null);
+    if (Object.keys(formData).length === 0) {
+      setUpdateUserError("No changes made");
       return;
     }
-    if (imageFileUploading){
-      setUpdateUserError("Please wait for image to upload")
+    if (imageFileUploading) {
+      setUpdateUserError("Please wait for image to upload");
       return;
     }
-      try {
-        dispatch(updateStart());
-        const res = await fetch(`api/user/update/${currentUser._id}`, {
-          method: "put",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
-        });
-        const data = await res.json();
-        if (!res.ok) {
-          dispatch(updateFailure(data.message));
-          setUpdateUserError("User's profile updated not successfully")
-        } else {
-          dispatch(updateSuccess(data));
-          setUpdateUserSuccess("User's profile updated successfully")
-        }
-      } catch (error) {
-        dispatch(updateFailure(error.message));
-        setUpdateUserError(error.message)
+    try {
+      dispatch(updateStart());
+      const res = await fetch(`api/user/update/${currentUser._id}`, {
+        method: "put",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        dispatch(updateFailure(data.message));
+        setUpdateUserError("User's profile updated not successfully");
+      } else {
+        dispatch(updateSuccess(data));
+        setUpdateUserSuccess("User's profile updated successfully");
       }
-  }
-  const handleDeleteUser = async () =>{
+    } catch (error) {
+      dispatch(updateFailure(error.message));
+      setUpdateUserError(error.message);
+    }
+  };
+  const handleDeleteUser = async () => {
     setShowModal(false);
     try {
       dispatch(deleteUserStart());
       const res = await fetch(`/api/user/delete/${currentUser._id}`, {
-        method: 'delete'
+        method: "delete",
+      });
+      const data = await res.json();
+      dispatch(deleteUserSuccess(data));
+    } catch (error) {
+      dispatch(deleteUserFailure(error.message));
+    }
+  };
+  const handleSignOut = async () => {
+    try {
+      const res = await fetch(`/api/user/signout`,{
+        method: 'post'
       })
       const data = await res.json();
-      dispatch(deleteUserSuccess(data))
+      if(!res.ok){
+        console.log(data.message)
+      } else {
+        dispatch(signoutSuccess())
+      }
     } catch (error) {
-      dispatch(deleteUserFailure(error.message))
+      console.log(error.message)
     }
-  }
+  };
   return (
     <div className="max-w-lg mx-auto p-3 w-full">
       <h1 className="my-7 text-center font-semibold text-3xl">Profile</h1>
@@ -208,34 +231,52 @@ export default function DashProfile() {
         </Button>
       </form>
       <div className="text-red-500 flex justify-between mt-5">
-        <span className="cursor-pointer" onClick={()=>setShowModal(true)}>Delete Account</span>
-        <span className="cursor-pointer">Sign Out</span>
+        <span className="cursor-pointer" onClick={() => setShowModal(true)}>
+          Delete Account
+        </span>
+        <span className="cursor-pointer" onClick={handleSignOut}>
+          Sign Out
+        </span>
       </div>
-      {updateUserSuccess && <Alert color='success' className="mt-5">{updateUserSuccess}</Alert>}
-      {updateUserError && <Alert color='failure' className="mt-5">{updateUserError}</Alert>}
+      {updateUserSuccess && (
+        <Alert color="success" className="mt-5">
+          {updateUserSuccess}
+        </Alert>
+      )}
+      {updateUserError && (
+        <Alert color="failure" className="mt-5">
+          {updateUserError}
+        </Alert>
+      )}
       {error && (
-        <Alert color='failure' className="mt-5">
+        <Alert color="failure" className="mt-5">
           {error}
         </Alert>
       )}
       <Modal
         show={showModal}
-        onClose={()=> setShowModal(false)}
+        onClose={() => setShowModal(false)}
         popup
-        size='md'
+        size="md"
       >
-       <Modal.Header>
-        <Modal.Body>
-          <div className="text-center">
-            <HiOutlineExclamationCircle className="h-14 w-14 text-gray-400 dark:text-gray-200 mb-4 mx-auto" />
-            <h3 className="mb-5 text-lg text-gray-500 dark:text-gray-400">Are you sure, you want to delete your account?</h3>
-            <div className="flex justify-center gap-4">
-              <Button color='failure' onClick={handleDeleteUser}>Yes, I'm sure</Button>
-              <Button color='gray' onClick={()=> setShowModal(false)}>No, cancle</Button>
+        <Modal.Header>
+          <Modal.Body>
+            <div className="text-center">
+              <HiOutlineExclamationCircle className="h-14 w-14 text-gray-400 dark:text-gray-200 mb-4 mx-auto" />
+              <h3 className="mb-5 text-lg text-gray-500 dark:text-gray-400">
+                Are you sure, you want to delete your account?
+              </h3>
+              <div className="flex justify-center gap-4">
+                <Button color="failure" onClick={handleDeleteUser}>
+                  Yes, I'm sure
+                </Button>
+                <Button color="gray" onClick={() => setShowModal(false)}>
+                  No, cancle
+                </Button>
+              </div>
             </div>
-          </div>
-        </Modal.Body>
-       </Modal.Header>
+          </Modal.Body>
+        </Modal.Header>
       </Modal>
     </div>
   );
