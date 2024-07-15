@@ -20,6 +20,10 @@ const userSchema = new mongoose.Schema(
       default:
         "https://img.icons8.com/?size=100&id=fUUEbUbXhzOA&format=png&color=000000",
     },
+    isAdmin: {
+      type: Boolean,
+      default: false
+    }
   },
   { timestamps: true }
 );
