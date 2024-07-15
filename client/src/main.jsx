@@ -7,6 +7,7 @@ import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import ThemeProvider from "./components/ThemeProvider.jsx";
 import "react-circular-progressbar/dist/styles.css";
+import "react-quill/dist/quill.snow.css";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
