@@ -59,7 +59,7 @@ export default function DashPosts() {
           ...prev,
           ...data.posts
         ])
-        if(data.posts.length < 9) {
+        if(data.posts.length < 5) {
           setShowMore(false)
         }
       }
