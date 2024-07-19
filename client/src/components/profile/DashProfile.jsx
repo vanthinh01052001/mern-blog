@@ -7,7 +7,7 @@ import {
   ref,
   uploadBytesResumable,
 } from "firebase/storage";
-import { app } from "../firebase.js";
+import { app } from "../../firebase.js";
 import { CircularProgressbar } from "react-circular-progressbar";
 import {
   deleteUserFailure,
@@ -17,7 +17,7 @@ import {
   updateFailure,
   updateStart,
   updateSuccess,
-} from "../redux/user/userSlice.js";
+} from "../../redux/user/userSlice.js";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
 import { Link } from "react-router-dom";
 

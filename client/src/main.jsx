@@ -5,7 +5,7 @@ import "./index.css";
 import { store, persistor } from "./redux/store.js";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
-import ThemeProvider from "./components/ThemeProvider.jsx";
+import ThemeProvider from "./components/theme/ThemeProvider.jsx";
 import "react-circular-progressbar/dist/styles.css";
 import "react-quill/dist/quill.snow.css";
 

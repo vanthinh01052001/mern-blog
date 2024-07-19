@@ -47,10 +47,11 @@ export default function Header() {
     <Navbar className="border-b-2">
       <Link
         to={"/"}
-        className="self-center whitespace-nowrap text-sm sm:text-xl font-semibold dark:text-white"
+        className="self-center whitespace-nowrap text-sm sm:text-xl font-semibold dark:text-white pl-10"
       >
-        <span className="px-2 py-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-lg text-white">{`Van Thinh's`}</span>{" "}
-        Blog
+        {/* <span className="px-2 py-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-lg text-white">{`Van Thinh's`}</span>{" "}
+        Blog */}
+        <img src="/logo.png" alt="logo" width={150}/>
       </Link>
       <form onSubmit={handleSubmit}>
         <TextInput
