@@ -37,3 +37,9 @@ body {
 .dark .post-content a {
     color: red;
 }
+.MuiInput-underline:before {
+    border-bottom: none !important;
+}
+.MuiInput-underline:after {
+    border-bottom: none !important;
+}
