@@ -1,0 +1,26 @@
+[
+    {
+        "index": 1,
+        "title": "HTML"
+    },
+    {
+        "index": 2,
+        "title": "CSS"
+    },
+        {
+        "index": 3,
+        "title": "JAVASCRIPT"
+    },
+    {
+        "index": 4,
+        "title": "REACT.JS"
+    },
+    {
+        "index": 5,
+        "title": "NEXT.JS"
+    },
+    {
+        "index": 6,
+        "title": "TAILWIND"
+    }
+]

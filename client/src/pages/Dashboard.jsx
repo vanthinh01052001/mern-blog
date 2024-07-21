@@ -19,20 +19,22 @@ export default function Dashboard() {
   },[location.search])
   return (
     <div className="min-h-screen flex flex-col md:flex-row">
-      <div className="md:w-56">
+      <div className="md:w-56 mt-20">
         {/* searchBar  */}
         <DashSidebar />
       </div>
-      {/* profile  */}
-      {tab === "profile" && <DashProfile />}
-      {/* posts   */}
-      {tab === "posts" && <DashPosts />}
-      {/* users  */}
-      {tab === "users" && <DashUsers />}
-      {/* comments  */}
-      {tab === "comments" && <DashComments />}
-      {/* dashboard  */}
-      {tab === "dashboard" && <DashboardComp />}
+      <div className="mt-20 w-full">
+        {/* profile  */}
+        {tab === "profile" && <DashProfile />}
+        {/* posts   */}
+        {tab === "posts" && <DashPosts />}
+        {/* users  */}
+        {tab === "users" && <DashUsers />}
+        {/* comments  */}
+        {tab === "comments" && <DashComments />}
+        {/* dashboard  */}
+        {tab === "dashboard" && <DashboardComp />}
+      </div>
     </div>
   );
 }

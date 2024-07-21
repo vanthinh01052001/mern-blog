@@ -2,6 +2,7 @@ import { TextInput, Select, FileInput, Button, Alert } from "flowbite-react";
 import { useState } from "react";
 import {useNavigate} from 'react-router-dom'
 import ReactQuill from "react-quill";
+import categories from '../json/categories.json'
 import {
   getStorage,
   ref,
@@ -10,8 +11,12 @@ import {
 } from "firebase/storage";
 import { CircularProgressbar } from "react-circular-progressbar";
 import { app } from "../firebase.js";
+import { useTranslation } from "react-i18next";
 
 export default function CreatePost() {
+  const {t} = useTranslation("translation", {
+    keyPrefix: "profile"
+  })
   const navigate = useNavigate();
   const [file, setFile] = useState(null);
   const [imageFileUploadProgress, setImageFileUploadProgress] = useState(null);
@@ -89,12 +94,14 @@ export default function CreatePost() {
   };
   return (
     <div className="p-3 max-w-3xl mx-auto min-h-screen">
-      <h1 className="text-center text-3xl my-7 font-semibold">Create a post</h1>
+      <h1 className="text-center text-3xl my-7 font-semibold">
+        {t("createAPost")}
+      </h1>
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <div className="flex flex-col gap-4 sm:flex-row justify-between">
           <TextInput
             type="text"
-            placeholder="Title"
+            placeholder={`${t("title")}`}
             required
             id="title"
             className="flex-1"
@@ -110,10 +117,10 @@ export default function CreatePost() {
               setFormData({ ...formData, category: e.target.value })
             }
           >
-            <option value="uncategorized">Select a category</option>
-            <option value="javascript">JavaScript</option>
-            <option value="reactjs">ReactJS</option>
-            <option value="nextjs">NextJS</option>
+            <option value="uncategorized">{t("selectCate")}</option>
+            {categories.map((cate) => (
+              <option key={cate.index} value={cate.title}>{cate.title}</option>
+            ))}
           </Select>
         </div>
         <div className="flex gap-4 items-center justify-between border-4 border-teal-500 border-dotted p-3">
@@ -134,7 +141,7 @@ export default function CreatePost() {
                 />
               </div>
             ) : (
-              "Upload Image"
+              `${t("uploadImage")}`
             )}
           </Button>
         </div>
@@ -151,7 +158,7 @@ export default function CreatePost() {
         )}
         <ReactQuill
           theme="snow"
-          placeholder="Write something"
+          placeholder={t("writeSomething")}
           className="h-72 mb-12"
           required
           onChange={(value) =>
@@ -162,9 +169,13 @@ export default function CreatePost() {
           }
         />
         <Button type="submit" gradientDuoTone="purpleToPink">
-          Publish
+          {t("public")}
         </Button>
-        {publicError && <Alert className="mt-5" color="failure">{publicError}</Alert>}
+        {publicError && (
+          <Alert className="mt-5" color="failure">
+            {publicError}
+          </Alert>
+        )}
       </form>
     </div>
   );

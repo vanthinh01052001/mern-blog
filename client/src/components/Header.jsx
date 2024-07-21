@@ -9,7 +9,9 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import Language from "./Language";
 export default function Header() {
-  const {t} = useTranslation();
+  const { t } = useTranslation("translation", {
+    keyPrefix: "header",
+  });
   const dispatch = useDispatch();
   const location = useLocation()
   const navigate = useNavigate()
@@ -47,19 +49,17 @@ export default function Header() {
     navigate(`/search?${searchQuery}`)
   }
   return (
-    <Navbar className="border-b-2">
+    <Navbar className="border-b-2 fixed z-50 w-full bg-white">
       <Link
         to={"/"}
         className="self-center whitespace-nowrap text-sm sm:text-xl font-semibold dark:text-white pl-10"
       >
-        {/* <span className="px-2 py-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-lg text-white">{`Van Thinh's`}</span>{" "}
-        Blog */}
         <img src="/logo.png" alt="logo" width={150} />
       </Link>
       <form onSubmit={handleSubmit}>
         <TextInput
           type="text"
-          placeholder="Search"
+          placeholder={t('search')}
           rightIcon={AiOutlineSearch}
           className="hidden lg:inline"
           value={searchTerm}
@@ -98,28 +98,28 @@ export default function Header() {
                 </span>
               </Dropdown.Header>
               <Link to="/dashboard?tab=profile">
-                <Dropdown.Item>Profile</Dropdown.Item>
+                <Dropdown.Item>{t('profile')}</Dropdown.Item>
               </Link>
               <Dropdown.Divider></Dropdown.Divider>
-              <Dropdown.Item onClick={handleSignOut}>Sign out</Dropdown.Item>
+              <Dropdown.Item onClick={handleSignOut}>{t('sign_out')}</Dropdown.Item>
             </Dropdown>
           </>
         ) : (
           <Link to={"/sign-in"}>
-            <Button gradientDuoTone={"purpleToBlue"}>Sign In</Button>
+            <Button gradientDuoTone={"purpleToBlue"}>{t('sign_in')}</Button>
           </Link>
         )}
         <Navbar.Toggle></Navbar.Toggle>
       </div>
       <Navbar.Collapse>
         <Navbar.Link active={path === "/"} as={"div"}>
-          <Link to="/">{t("home")}</Link>
+          <Link to="/">{t('home')}</Link>
         </Navbar.Link>
         <Navbar.Link active={path === "/about"} as={"div"}>
-          <Link to="/about">About</Link>
+          <Link to="/about">{t('about_me')}</Link>
         </Navbar.Link>
         <Navbar.Link active={path === "/projects"} as={"div"}>
-          <Link to="/projects">Projects</Link>
+          <Link to="/projects">{t('projects')}</Link>
         </Navbar.Link>
         <Navbar.Link as={"div"} className="relative">
           <div className="absolute -translate-y-[60px]">

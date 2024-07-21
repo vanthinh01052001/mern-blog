@@ -11,8 +11,12 @@ import { HiMiniUserGroup } from "react-icons/hi2";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import { signoutSuccess } from "../redux/user/userSlice";
+import { useTranslation } from "react-i18next";
 
 export default function DashSidebar() {
+  const { t } = useTranslation("translation", {
+    keyPrefix: "sidebar",
+  });
   const { currentUser } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const location = useLocation();
@@ -50,7 +54,7 @@ export default function DashSidebar() {
                 icon={HiChartPie}
                 as="div"
               >
-                Dashboard
+                {t("dashboard")}
               </Sidebar.Item>
             </Link>
           )}
@@ -62,7 +66,7 @@ export default function DashSidebar() {
               labelColor="dark"
               as="div"
             >
-              Profile
+              {t("profile")}
             </Sidebar.Item>
           </Link>
           {currentUser && currentUser.isAdmin && (
@@ -72,7 +76,7 @@ export default function DashSidebar() {
                 icon={HiDocumentText}
                 as="div"
               >
-                Posts
+                {t("posts")}
               </Sidebar.Item>
             </Link>
           )}
@@ -83,7 +87,7 @@ export default function DashSidebar() {
                 icon={HiMiniUserGroup}
                 as="div"
               >
-                Users
+                {t("users")}
               </Sidebar.Item>
             </Link>
           )}
@@ -94,7 +98,7 @@ export default function DashSidebar() {
                 icon={HiAnnotation}
                 as="div"
               >
-                Comments
+                {t("comments")}
               </Sidebar.Item>
             </Link>
           )}
@@ -103,7 +107,7 @@ export default function DashSidebar() {
             onClick={handleSignOut}
             className="cursor-pointer"
           >
-            Sign out
+            {t("sign_out")}
           </Sidebar.Item>
         </Sidebar.ItemGroup>
       </Sidebar.Items>

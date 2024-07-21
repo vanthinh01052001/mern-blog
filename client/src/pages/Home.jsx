@@ -5,7 +5,9 @@ import PostCard from "../components/post/PostCard.jsx";
 import { useTranslation } from "react-i18next";
 
 export default function Home() {
-  const {t} = useTranslation();
+  const {t} = useTranslation("translation", {
+    keyPrefix: "home"
+  });
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
@@ -17,20 +19,15 @@ export default function Home() {
     fetchPosts();
   }, []);
   return (
-    <div className="px-44">
+    <div className="lg:px-44">
       <div className="flex flex-col gap-6 p-28 px-3 max-w-6xl">
-        <h1 className="text-3xl font-bold lg:text-6xl">Welcom to my Blog</h1>
-        <p className="text-gray-500 text-xs sm:text-sm">
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nesciunt
-          harum cupiditate quia dolore qui omnis dolorem unde repudiandae
-          praesentium eaque hic quasi, numquam mollitia assumenda in cum
-          suscipit ipsa recusandae?
-        </p>
+        <h1 className="text-3xl font-bold lg:text-6xl">{t("welcom")}</h1>
+        <p className="text-gray-500 text-xs sm:text-sm">{t("contentWelcom")}</p>
         <Link
           to="/search"
           className="text-xs sm:text-sm text-teal-500 font-bold hover:underline"
         >
-          View all posts
+          {t("viewAllPosts")}
         </Link>
       </div>
       <div className="p-3 bg-amber-100 dark:bg-slate-700">
@@ -39,14 +36,19 @@ export default function Home() {
       <div className="max-w-6xl mx-auto p-3 flex flex-col gap-8 py-7">
         {posts && posts.length > 0 && (
           <div className="flex flex-col gap-6">
-            <h2 className="text-2xl font-semibold text-center">Recent Posts</h2>
+            <h2 className="text-2xl font-semibold text-center">
+              {t("recentPosts")}
+            </h2>
             <div className="flex flex-wrap gap-4 items-center">
               {posts.map((post) => (
                 <PostCard key={post._id} post={post} />
               ))}
             </div>
-            <Link to='/search' className="text-lg text-teal-500 hover:underline text-center">
-              View all posts
+            <Link
+              to="/search"
+              className="text-lg text-teal-500 hover:underline text-center"
+            >
+              {t("viewAllPosts")}
             </Link>
           </div>
         )}
