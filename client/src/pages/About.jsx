@@ -10,14 +10,14 @@ export default function About() {
         <iframe
           src={CV_Vi}
           title="CV Mai Van Thinh"
-          className="rounded w-[70%] min-h-screen"
+          className="rounded w-[70%] min-h-screen mt-20"
         ></iframe>
       )}
       {i18n.language === "uk" && (
         <iframe
           src={CV_Eng}
           title="CV Mai Van Thinh"
-          className="rounded w-[70%] min-h-screen"
+          className="rounded w-[70%] min-h-screen mt-20"
         ></iframe>
       )}
     </div>
