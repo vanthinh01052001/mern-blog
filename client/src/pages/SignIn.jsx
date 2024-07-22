@@ -47,7 +47,7 @@ export default function SignIn() {
     }
   };
   return (
-    <div className="min-h-screen mt-20">
+    <div className="min-h-screen flex items-center justify-center">
       <div className="flex gap-5 p-3 max-w-3xl mx-auto flex-col md:flex-row md:items-center">
         {/* left */}
         <div className="flex-1">

@@ -52,7 +52,7 @@ export default function Header() {
     <Navbar className="border-b-2 fixed z-50 w-full bg-white">
       <Link
         to={"/"}
-        className="self-center whitespace-nowrap text-sm sm:text-xl font-semibold dark:text-white pl-10"
+        className="self-center whitespace-nowrap text-sm sm:text-xl font-semibold dark:text-white md:pl-10"
       >
         <img src="/logo.png" alt="logo" width={150} />
       </Link>
