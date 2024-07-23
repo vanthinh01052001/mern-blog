@@ -3,6 +3,7 @@
 @tailwind utilities;
 
 body {
+    @apply font-sans text-primaryText placeholder:text-placeHolderText;
     height: 100vh;
 }
 

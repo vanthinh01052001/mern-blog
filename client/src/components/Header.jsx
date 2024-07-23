@@ -13,19 +13,19 @@ export default function Header() {
     keyPrefix: "header",
   });
   const dispatch = useDispatch();
-  const location = useLocation()
-  const navigate = useNavigate()
+  const location = useLocation();
+  const navigate = useNavigate();
   const { theme } = useSelector((state) => state.theme);
-  const [searchTerm, setSearchTerm] = useState('')
+  const [searchTerm, setSearchTerm] = useState("");
   const { currentUser } = useSelector((state) => state.user);
   const path = useLocation();
-  useEffect(()=>{
+  useEffect(() => {
     const urlParams = new URLSearchParams(location.search);
-    const searchTermFromUrl = urlParams.get('searchTerm');
-    if(searchTermFromUrl) {
-      setSearchTerm(searchTermFromUrl)
+    const searchTermFromUrl = urlParams.get("searchTerm");
+    if (searchTermFromUrl) {
+      setSearchTerm(searchTermFromUrl);
     }
-  }, [location.search])
+  }, [location.search]);
   const handleSignOut = async () => {
     try {
       const res = await fetch(`/api/user/signout`, {
@@ -41,25 +41,39 @@ export default function Header() {
       console.log(error.message);
     }
   };
-  const handleSubmit =(e) =>{
+  const handleSubmit = (e) => {
     e.preventDefault();
     const urlParams = new URLSearchParams(location.search);
-    urlParams.set('searchTerm', searchTerm);
+    urlParams.set("searchTerm", searchTerm);
     const searchQuery = urlParams.toString();
-    navigate(`/search?${searchQuery}`)
-  }
+    navigate(`/search?${searchQuery}`);
+  };
   return (
     <Navbar className="border-b-2 fixed z-50 w-full bg-white">
       <Link
         to={"/"}
         className="self-center whitespace-nowrap text-sm sm:text-xl font-semibold dark:text-white md:pl-10"
       >
-        <img src="/logo.png" alt="logo" width={150} />
+        {theme === "light" ? (
+          <img
+            src="/logoLight.png"
+            alt="logo"
+            width={50}
+            className="rounded-full"
+          />
+        ) : (
+          <img
+            src="/logoDark.png"
+            alt="logo"
+            width={50}
+            className="rounded-full"
+          />
+        )}
       </Link>
       <form onSubmit={handleSubmit}>
         <TextInput
           type="text"
-          placeholder={t('search')}
+          placeholder={t("search")}
           rightIcon={AiOutlineSearch}
           className="hidden lg:inline"
           value={searchTerm}
@@ -98,28 +112,30 @@ export default function Header() {
                 </span>
               </Dropdown.Header>
               <Link to="/dashboard?tab=profile">
-                <Dropdown.Item>{t('profile')}</Dropdown.Item>
+                <Dropdown.Item>{t("profile")}</Dropdown.Item>
               </Link>
               <Dropdown.Divider></Dropdown.Divider>
-              <Dropdown.Item onClick={handleSignOut}>{t('sign_out')}</Dropdown.Item>
+              <Dropdown.Item onClick={handleSignOut}>
+                {t("sign_out")}
+              </Dropdown.Item>
             </Dropdown>
           </>
         ) : (
           <Link to={"/sign-in"}>
-            <Button gradientDuoTone={"purpleToBlue"}>{t('sign_in')}</Button>
+            <Button gradientDuoTone={"purpleToBlue"}>{t("sign_in")}</Button>
           </Link>
         )}
         <Navbar.Toggle></Navbar.Toggle>
       </div>
       <Navbar.Collapse>
         <Navbar.Link active={path === "/"} as={"div"}>
-          <Link to="/">{t('home')}</Link>
+          <Link to="/">{t("home")}</Link>
         </Navbar.Link>
         <Navbar.Link active={path === "/about"} as={"div"}>
-          <Link to="/about">{t('about_me')}</Link>
+          <Link to="/about">{t("about_me")}</Link>
         </Navbar.Link>
         <Navbar.Link active={path === "/projects"} as={"div"}>
-          <Link to="/projects">{t('projects')}</Link>
+          <Link to="/projects">{t("projects")}</Link>
         </Navbar.Link>
         <Navbar.Link as={"div"} className="relative">
           <div className="absolute -translate-y-[60px]">
