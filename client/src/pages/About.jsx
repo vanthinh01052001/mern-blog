@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next";
-import CV_Eng from "/CV_MaiVanThinh_Frontend.pdf";
-import CV_Vi from "/CV_VanThinh_Frontend.pdf";
+import CV_Eng from "/CV-en_VanThinh_Frontend.pdf";
+import CV_Vi from "/CV-vi_VanThinh_Frontend.pdf";
 import Header from "../components/Header";
 export default function About() {
   const { i18n } = useTranslation();
